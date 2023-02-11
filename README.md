@@ -10,9 +10,9 @@ Then create a `Database` instance, to call the constructor you will need an `Ada
 
 ```php
 $options = [
-	'host' => getenv('TEST_DB_HOST') ?: 'localhost',
-	'name' => getenv('TEST_DB_NAME') ?: 'test',
-	'user' => getenv('TEST_DB_USER') ?: 'root',
+  'host' => getenv('TEST_DB_HOST') ?: 'localhost',
+  'name' => getenv('TEST_DB_NAME') ?: 'test',
+  'user' => getenv('TEST_DB_USER') ?: 'root',
 ];
 $adapter = new MySQLAdapter($options);
 $database = new Database($adapter);
@@ -22,7 +22,7 @@ Or using SQLite:
 
 ```php
 $options = [
-	'file' => 'path/to/database.sqlite'
+  'file' => 'path/to/database.sqlite'
 ];
 $adapter = new SQLiteAdapter($options);
 $database = new Database($adapter);
@@ -52,7 +52,7 @@ If you need to do more complex stuff, you may pass a `Closure` as the third argu
 ```php
 $params = [4];
 $row = $database->query("SELECT * FROM test WHERE id = ?", $params, function($stmt) {
-	return $stmt->fetch();
+  return $stmt->fetch();
 });
 ```
 
@@ -96,9 +96,9 @@ Chunking is also possible by means of the `chunk` method:
 ```php
 $params = ['Published'];
 $database->chunk(100, "SELECT id, title FROM test WHERE status = ?", $params, function($rows) {
-	foreach ($rows as $row) {
-		// Do something with the row data
-	}
+  foreach ($rows as $row) {
+    // Do something with the row data
+  }
 });
 ```
 
@@ -112,8 +112,8 @@ To use them, call the `transaction` method:
 
 ```php
 $database->transaction(function($database) {
-	$params = ['Draft', 2];
-	$database->query("UPDATE test SET status = ? WHERE id = ?", $params);
+  $params = ['Draft', 2];
+  $database->query("UPDATE test SET status = ? WHERE id = ?", $params);
 });
 ```
 
@@ -124,11 +124,11 @@ You can also use manual transactions with the `begin`, `commit` and `rollback` m
 ```php
 $params = ['Published', 3];
 try {
-	$database->begin();
-	$database->query("UPDATE test SET status = ? WHERE id = ?", $params);
-	$database->commit();
+  $database->begin();
+  $database->query("UPDATE test SET status = ? WHERE id = ?", $params);
+  $database->commit();
 } catch (Exception $e) {
-	$database->rollback();
+  $database->rollback();
 }
 ```
 
